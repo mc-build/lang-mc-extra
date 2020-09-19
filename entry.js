@@ -40,7 +40,7 @@ function targetedJSONAction(trigger, getPath) {
                 if (item === "}")
                     count--;
             }
-            file.setContents(content.join(""));
+            file.setContents(JSON.stringify(JSON.parse(content.join(""))));
             file.confirm();
         }
     }
@@ -121,7 +121,11 @@ module.exports = function MC_EXTRA(registry) {
                 const [, name, action, value] = token.split(/\s+/);
                 switch (action) {
                     case "add":
-                        state.tags[name].values.add(mc.transpiler.evaluate_str(value));
+                        try {
+                            state.tags[name].values.add(mc.transpiler.evaluate_str(value));
+                        } catch (e) {
+                            throw new CompilerError(`invalid tag name '${name}'!`, _token.line);
+                        }
                         break;
                     default:
                         throw new CompilerError(`invalid tag action '${action}'`, _token.line);
