@@ -25,7 +25,8 @@ function targetedJSONAction(trigger, getPath) {
     return {
         match: ({ token }) => token.startsWith(trigger),
         exec(_, tokens) {
-            const { token } = tokens.shift();
+            const _token = tokens.shift();
+            const { token } = _token;
             const [, name] = token.split(/\s+/);
             const file = new File();
             file.setPath(getPath(name, _));
@@ -40,8 +41,12 @@ function targetedJSONAction(trigger, getPath) {
                 if (item === "}")
                     count--;
             }
-            file.setContents(JSON.stringify(JSON.parse(content.join(""))));
-            file.confirm();
+            try {
+                file.setContents(JSON.stringify(JSON.parse(content.join(""))));
+                file.confirm();
+            } catch (e) {
+                throw new CompilerError(e.message, _token.line);
+            }
         }
     }
 }
