@@ -26,9 +26,10 @@ function targetedJSONAction(trigger, getPath) {
         match: ({ token }) => token.startsWith(trigger),
         exec(_, tokens) {
             const { token } = tokens.shift();
-            const [, name] = token.split(/\s+/);
+            const firstSpace = token.indexOf(" ")
+            const name = token.substr(firstSpace,token.length);
             const file = new File();
-            file.setPath(getPath(name, _));
+            file.setPath(mc.transpiler.evaluate_str(getPath(name, _)));
             mc.transpiler.validate_next_destructive(tokens, "{");
             let count = 1;
             let content = ["{"];
