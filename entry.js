@@ -46,6 +46,7 @@ function targetedJSONAction(trigger, getPath) {
         file.setContents(JSON.stringify(JSON.parse(content.join(""))));
         file.confirm();
       } catch (e) {
+        console.log(content.join(""));
         throw new CompilerError(e.message, _token.line);
       }
     },
