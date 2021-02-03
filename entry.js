@@ -155,6 +155,10 @@ module.exports = function MC_EXTRA(registry) {
             const namespace = mc.getNamespace();
             return path.resolve(process.cwd(), 'data', namespace.namespace, 'predicates', namespace.path + name + ".json")
         }));
+        EntryConsumer.addAction(targetedJSONAction("modifier", (name) => {
+          const namespace = mc.getNamespace();
+          return path.resolve(process.cwd(), 'data', namespace.namespace, 'item_modifiers', namespace.path + name + ".json")
+      }));
         EntryConsumer.addAction(targetedJSONAction("recipe", (name) => {
             const namespace = mc.getNamespace();
             return path.resolve(process.cwd(), 'data', namespace.namespace, 'recipes', namespace.path + name + ".json")
@@ -226,6 +230,10 @@ module.exports = function MC_EXTRA(registry) {
             const namespace = mc.getNamespace();
             return path.resolve(process.cwd(), 'data', namespace.namespace, 'predicates', namespace.path + name + ".json")
         }));
+        EntryOp.addAction(targetedJSONAction("modifier", (name, file) => {
+          const namespace = mc.getNamespace();
+          return path.resolve(process.cwd(), 'data', namespace.namespace, 'item_modifiers', namespace.path + name + ".json")
+      }));
         EntryOp.addAction(targetedJSONAction("recipe", (name, file) => {
             const namespace = mc.getNamespace();
             return path.resolve(process.cwd(), 'data', namespace.namespace, 'recipes', namespace.path + name + ".json")
